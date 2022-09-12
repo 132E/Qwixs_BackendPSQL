@@ -32,6 +32,21 @@ const createNewOwner = async (req, res) => {
   }
 };
 
+// Update an owner
+const updateOwner = async (req, res) => {
+  try {
+    let ownerId = parseInt(req.params.owner_id);
+    let updatedOwner = await Owner.update(req.params.owner_id, {
+      where: { id: ownerId },
+      returning: true,
+    });
+
+    res.send(updatedOwner);
+  } catch (error) {
+    throw error;
+  }
+};
+
 // Delete an owner
 const deleteOwner = async (req, res) => {
   try {
@@ -49,5 +64,6 @@ module.exports = {
   getAllOwners,
   getOwnerById,
   createNewOwner,
+  updateOwner,
   deleteOwner,
 };
