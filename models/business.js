@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Business.belongsTo(models.Owner, { foreignKey: "ownerId" });
     }
   }
   Business.init(
@@ -22,6 +22,15 @@ module.exports = (sequelize, DataTypes) => {
       state: DataTypes.STRING,
       zipcode: DataTypes.INTEGER,
       phone: DataTypes.INTEGER,
+      ownerId: {
+        type: DataTypes.INTEGER,
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+        references: {
+          model: "owners",
+          key: "id",
+        },
+      },
     },
     {
       sequelize,
