@@ -25,8 +25,10 @@ const getServiceById = async (req, res) => {
 // Create a new service
 const createNewService = async (req, res) => {
   try {
-    let newService = await Service.create(req.body);
-    res.send(newService);
+    let businessId = parseInt(req.params.business_id);
+    let newService = { businessId, ...req.body };
+    let service = await Service.create(newService);
+    res.send(service);
   } catch (error) {
     throw error;
   }
